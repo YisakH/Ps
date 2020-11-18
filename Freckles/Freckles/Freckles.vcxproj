@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ffb0c4b6-5ae1-45d7-b761-5645a2cb8471}</ProjectGuid>
-    <RootNamespace>FromDuskTillDawn</RootNamespace>
+    <ProjectGuid>{83a75bae-19e1-4510-8694-03963e6fd86b}</ProjectGuid>
+    <RootNamespace>Freckles</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
