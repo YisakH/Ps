@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{50eaad83-1fdb-4ba3-9bf9-528b9e7e6cb3}</ProjectGuid>
-    <RootNamespace>Weightsandmeasures</RootNamespace>
+    <ProjectGuid>{191360e0-1182-44f9-9ebf-6f081436ff2e}</ProjectGuid>
+    <RootNamespace>FerryLoading</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
