@@ -28,7 +28,5 @@ int main()
 
 		printf("%d\n", arr[N][M]);
 
-		//nCr = n * n-1Cr-1
-
 	}
 }
