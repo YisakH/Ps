@@ -1,23 +1,76 @@
 #include <cstdio>
 #include <queue>
 #include <vector>
-#include <algorithm>
 using namespace std;
-vector<vector<pair<int, int>>> vec;
-
-int compare(pair<int, int> a, vector<vector<pair<int, int>>> b)
+typedef struct edge
 {
-	
+	int from;
+	int dest;
+	int weight;
+}Edge;
+
+struct compare {
+	bool operator()(Edge a, Edge b) {
+		if (a.weight != b.weight)
+			return a.weight >= b.weight;
+		else
+			return 0;
+	}
+};
+
+vector<int> check;
+priority_queue<edge, vector<edge>, compare> q;
+
+
+
+bool isSame(int a, int b)
+{
+	while (check[a] != a) {
+		a = check[a];
+	}
+	while (check[b] != b) {
+		b = check[b];
+	}
+	return a == b;
 }
+int getRoot(int a)
+{
+	while (check[a] != a)
+		a = check[a];
+	return a;
+}
+
+
 int main()
 {
 	int V, E, from, to, weight;
 	scanf("%d %d", &V, &E);
-	vec.assign(V + 1, {});
+
+	check.assign(V + 1, 0);
+	for (int i = 0; i <= V; i++)
+		check[i] = i;
+
 	for (int i = 0; i < E; i++) {
 		scanf("%d %d %d", &from, &to, &weight);
-		vec[from].push_back({ weight, to });
+		q.push({ from, to, weight });
 	}
 
-	sort(vec.begin(), vec.end(), )
+	int cnt = 0, i = 0, sum = 0;
+
+	while (cnt < V-1 && !q.empty())
+	{
+		Edge e = q.top();
+		q.pop();
+
+		if (isSame(e.from, e.dest))
+			continue;
+
+		check[getRoot(e.from)] = getRoot(e.dest);
+
+		sum += e.weight;
+		cnt++;
+		i++;
+	}
+
+	printf("%d\n", sum);
 }
