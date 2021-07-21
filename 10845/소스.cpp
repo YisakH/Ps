@@ -1,37 +1,58 @@
-#include <vector>
 #include <cstdio>
-
+#include <queue>
+#include <string>
+#include <iostream>
 using namespace std;
 
 int main()
 {
-	int N, K;
+	deque<int> deq;
+	string str;
+	int inp;
 
-	scanf("%d %d", &N, &K);
-	vector<int> list	(N + 1, 0);
-	vector<int> next(N + 1, 0);
-	vector<int> answer;
-	for (int i = 0; i < N; i++) {
-		list[i] = next[i] = i + 1;
-	}
-	next[N - 1] = 0;
-	
-	int cur = N-1, before = 0;
-	for (int i = 0; i < N; i++) {
+	scanf("%d", &inp);
 
-		for (int j = 0; j < K; j++) {
-			before = cur;
-			cur = next[cur];
+	while (inp--) {
+		int N;
+		cin >> str;
+
+		if (str.compare("push") == 0) {
+			scanf("%d", &N);
+			deq.push_back(N);
 		}
-		answer.push_back(list[cur]);
+		else if (str.compare("pop") == 0) {
+			if (deq.empty()) {
+				printf("-1\n");
+			}
+			else {
+				printf("%d\n", deq.front());
+				deq.pop_front();
+			}
+		}
+		else if (str.compare("size") == 0) {
+			printf("%d\n", deq.size());
+		}
+		else if (str.compare("empty") == 0) {
+			printf("%d\n", deq.empty());
+		}
+		else if (str.compare("front") == 0) {
+			if (deq.empty()) {
+				printf("-1\n");
+			}
+			else {
+				printf("%d\n", deq.front());
+			}
+		}
+		else {
+			if (deq.empty()) {
+				printf("-1\n");
+			}
+			else {
+				printf("%d\n", deq.back());
+			}
+		}
 
-		next[before] = next[cur];
 	}
-
-	printf("<");
-	for (int i = 0; i < N - 1; i++)
-		printf("%d, ", answer[i]);
-	printf("%d>", answer[N - 1]);
 
 
 }
