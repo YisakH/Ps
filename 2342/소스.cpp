@@ -27,7 +27,8 @@ int main()
 				if (dp[i - 1][left][right] == -1) continue;
 
 				if (left == move || right == move) {
-					dp[i][left][right] = dp[i - 1][left][right] + 1;
+					if (dp[i][left][right] > dp[i - 1][left][right] + 1 || dp[i][left][right] == -1)
+						dp[i][left][right] = dp[i - 1][left][right] + 1;
 				}
 				else {
 					int next_left_cost;
