@@ -12,6 +12,7 @@ int main()
 
 	scanf("%d", &N);
 	vector<int> inp(N);
+
 	for (int i = 0; i < N; i++)
 		scanf("%d", &inp[i]);
 
