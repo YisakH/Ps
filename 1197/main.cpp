@@ -2,6 +2,7 @@
 #include <queue>
 #include <vector>
 using namespace std;
+
 typedef struct edge
 {
 	int from;
@@ -18,37 +19,39 @@ struct compare {
 	}
 };
 
-vector<int> check;
+vector<int> root;
 priority_queue<edge, vector<edge>, compare> q;
 
 
 
 bool isSame(int a, int b)
 {
-	while (check[a] != a) {
-		a = check[a];
-	}
-	while (check[b] != b) {
-		b = check[b];
-	}
-	return a == b;
+	return root[a] == root[b];
 }
 int getRoot(int a)
 {
-	while (check[a] != a)
-		a = check[a];
-	return a;
+	return root[a];
 }
 
+void add(int nodeA, int nodeB, int size)
+{
+	int rootA = getRoot(nodeA);
+
+	for (int i = 0; i < size; i++)
+	{
+		if (getRoot(i) == getRoot(nodeB))
+			root[i] = rootA;
+	}
+}
 
 int main()
 {
 	int V, E, from, to, weight;
 	scanf("%d %d", &V, &E);
 
-	check.assign(V + 1, 0);
+	root.assign(V + 1, 0);
 	for (int i = 0; i <= V; i++)
-		check[i] = i;
+		root[i] = i;
 
 	for (int i = 0; i < E; i++) {
 		scanf("%d %d %d", &from, &to, &weight);
@@ -57,7 +60,7 @@ int main()
 
 	int cnt = 0, i = 0, sum = 0;
 
-	while (cnt < V-1 && !q.empty())
+	while (cnt < V - 1 && !q.empty())
 	{
 		Edge e = q.top();
 		q.pop();
@@ -65,7 +68,7 @@ int main()
 		if (isSame(e.from, e.dest))
 			continue;
 
-		check[getRoot(e.from)] = getRoot(e.dest);
+		add(e.from, e.dest, V);
 
 		sum += e.weight;
 		cnt++;
