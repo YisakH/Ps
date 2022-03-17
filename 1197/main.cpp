@@ -28,18 +28,15 @@ bool isSame(int a, int b)
 {
 	return root[a] == root[b];
 }
-int getRoot(int a)
-{
-	return root[a];
-}
+
 
 void add(int nodeA, int nodeB, int size)
 {
-	int rootA = getRoot(nodeA);
+	int rootA = root[nodeA];
 
 	for (int i = 0; i < size; i++)
 	{
-		if (getRoot(i) == getRoot(nodeB))
+		if (root[i] == root[nodeB])
 			root[i] = rootA;
 	}
 }
