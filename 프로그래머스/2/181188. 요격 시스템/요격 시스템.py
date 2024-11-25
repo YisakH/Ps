@@ -1,13 +1,12 @@
 def solution(targets):
     answer = 0
-    targets.sort(key=lambda x:(x[0], x[1]))
-    be = -1
-    
-    for [s, e] in targets:
-        if be <= s: # 기존 요격 범위에서 벗어남
-            be = e
+    targets.sort(key=lambda x:x[1])
+    answer = 0
+    end = -1  # 마지막으로 요격한 미사일의 x좌표
+
+    for s, e in targets:
+        if s >= end:  # 이전에 요격한 미사일로는 현재 미사일을 요격할 수 없는 경우
             answer += 1
-        else: # 기조 요격 범위에 포함
-            be = min(be, e)
-            
+            end = e  # 현재 미사일을 요격함으로써 끝나는 지점을 업데이트
+
     return answer
