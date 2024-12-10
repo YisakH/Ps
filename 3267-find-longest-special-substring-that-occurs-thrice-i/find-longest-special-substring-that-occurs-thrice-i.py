@@ -8,11 +8,11 @@ class Solution:
             while j < len(s):
                 if s[j] != s[i]:
                     break
-                if s[i:j+1] in found:
-                    j += 1
-                    continue
-                print(i, j)
-                found.add(s[i:j+1])
+                #if s[i:j+1] in found:
+                #    j += 1
+                #    continue
+                #print(i, j)
+                #found.add(s[i:j+1])
                 cnt = 0
                 findIdx = i
                 while True:
