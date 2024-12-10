@@ -1,7 +1,7 @@
 class Solution:
     def maximumLength(self, s: str) -> int:
         answer = 0
-        found = set()
+        #found = set()
         i = 0
         while i < len(s):
             j = i
@@ -25,7 +25,6 @@ class Solution:
                         break
                 if cnt >= 3:
                     answer = max(answer, j - i + 1)
-                    print(s[i:j+1])
                 j += 1
             i = max(j, i + 1)
                 
