@@ -1,18 +1,18 @@
 class Solution:
     def maximumLength(self, s: str) -> int:
         answer = 0
-        #found = set()
+        found = set()
         i = 0
         while i < len(s):
             j = i
             while j < len(s):
                 if s[j] != s[i]:
                     break
-                #if s[i:j+1] in found:
-                #    j += 1
-                #    continue
+                if s[i:j+1] in found:
+                    j += 1
+                    continue
                 #print(i, j)
-                #found.add(s[i:j+1])
+                found.add(s[i:j+1])
                 cnt = 0
                 findIdx = i
                 while True:
