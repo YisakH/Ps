@@ -1,16 +1,17 @@
+import heapq
+
 class Solution:
     def findScore(self, nums: List[int]) -> int:
-        nums = [[n, i] for i, n in enumerate(nums)]
-        nums.sort()
+        heap = [(n, i) for i, n in enumerate(nums)]
+        heapq.heapify(heap)
         answer = 0
         marked = set()
-        i = 0
-        while len(marked) < len(nums):
-            while i < len(nums) and nums[i][1] in marked:
-                i += 1
-            answer += nums[i][0]
-            marked.add(nums[i][1])
-            marked.add(max(nums[i][1] - 1, 0))
-            marked.add(min(nums[i][1] + 1, len(nums) - 1))
+        while heap:
+            n, i = heapq.heappop(heap)
+            if i not in marked:
+                marked.add(i)
+                marked.add(max(i - 1, 0))
+                marked.add(min(i + 1, len(nums) - 1))
+                answer += n
         
         return answer
