@@ -12,6 +12,5 @@ class Solution(object):
             if len(val) > 1 and val[-1] - val[0] >= 2:
                 myset = set([ch for ch in s[val[0] + 1: val[-1]]])
                 answer += len(myset)
-                print(val[0], val[1])
         
         return answer
