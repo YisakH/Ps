@@ -1,16 +1,15 @@
-from collections import defaultdict
-
 class Solution(object):
     def countPalindromicSubsequence(self, s):
-        dic = defaultdict(list)
+        letters = set(s)
         answer = 0
+        for letter in letters:
+            i, j = s.index(letter), s.rindex(letter)
 
-        for i, ch in enumerate(s):
-            dic[ch].append(i)
-        
-        for key, val in dic.items():
-            if len(val) > 1 and val[-1] - val[0] >= 2:
-                myset = set([ch for ch in s[val[0] + 1: val[-1]]])
-                answer += len(myset)
+            between = set()
+
+            for k in range(i+1, j):
+                between.add(s[k])
+            
+            answer += len(between)
         
         return answer
