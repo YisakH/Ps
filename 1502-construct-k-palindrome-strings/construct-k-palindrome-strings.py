@@ -7,20 +7,16 @@ class Solution(object):
         :type k: int
         :rtype: bool
         """
-        N = len(s)
-        if N < k:
+        if len(s) < k:
             return False
+
         count = Counter(s)
         one, zero = 0, 0
-        print(count)
         
-        for key, val in count.items():
-            if val % 2 == 0:
-                zero += 1
-            else:
+        for val in count.values():
+            if val % 2 == 1:
                 one += 1
-        
-        print(zero, one)
+
         if one <= k:
             return True
         else:
