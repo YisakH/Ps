@@ -1,15 +1,14 @@
-from collections import defaultdict
-from collections import deque
+from collections import Counter
 
 class Solution(object):
     def minimumLength(self, s):
-        dic = defaultdict(deque)
+        cnt = Counter(s)
+        answer = 0
 
-        for i, ch in enumerate(s):
-            dic[ch].append(i)
-
-            if len(dic[ch]) >= 3:
-                dic[ch].pop()
-                dic[ch].popleft()
+        for val in cnt.values():
+            if val % 2 == 0:
+                answer += 2
+            else:
+                answer += 1
         
-        return sum([len(val) for val in dic.values()])
+        return answer
