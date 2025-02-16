@@ -1,31 +1,44 @@
 class Solution:
     def constructDistancedSequence(self, n: int) -> List[int]:
-        answer = [0 for _ in range(2*n-1)]
-        
-        def dfs(idx, visited):
-            if idx == 2 * n - 1:
-                return answer
+        length = 2 * n - 1  # 결과 배열 길이
+        answer = [0] * length  # 초기 배열을 0으로 채움
+        used = set()  # 사용된 숫자를 추적
 
-            if answer[idx] != 0:
-                return dfs(idx + 1, visited)
+        def dfs(index: int) -> bool:
+            # 배열이 다 채워졌으면 정답 반환
+            if index == length:
+                return True
+            
+            # 이미 숫자가 채워진 경우, 다음으로 진행
+            if answer[index] != 0:
+                return dfs(index + 1)
 
-            for i in range(n, 1, -1):
-                if answer[idx] == 0 and idx + i < 2 * n - 1 and answer[idx + i] == 0 and i not in visited:
-                    answer[idx] = i
-                    answer[idx + i] = i
-                    result = dfs(idx + 1, visited | {(i)})
-                    if result:
-                        return result
+            # 큰 숫자부터 배치하여 사전순 최대 보장
+            for num in range(n, 1, -1):
+                if num not in used and index + num < length and answer[index + num] == 0:
+                    answer[index] = answer[index + num] = num
+                    used.add(num)
 
-                    answer[idx] = 0
-                    answer[idx + i] = 0
+                    if dfs(index + 1):
+                        return True  # 정답을 찾으면 바로 종료
 
-            if 1 not in visited:
-                answer[idx] = 1
-                result = dfs(idx + 1, visited | {(1)})
-                if result:
-                    return result  # 정답을 찾으면 즉시 반환
-                answer[idx] = 0
+                    # 백트래킹: 원상복구
+                    answer[index] = answer[index + num] = 0
+                    used.remove(num)
 
+            # 숫자 1은 단 한 번만 사용되므로, 따로 처리
+            if 1 not in used:
+                answer[index] = 1
+                used.add(1)
 
-        return dfs(0, set())
+                if dfs(index + 1):
+                    return True
+
+                # 백트래킹
+                answer[index] = 0
+                used.remove(1)
+
+            return False  # 실패 시 False 반환
+
+        dfs(0)
+        return answer
