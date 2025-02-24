@@ -1,55 +1,55 @@
-from collections import defaultdict, deque
+from collections import defaultdict
+from math import inf
+from typing import List
 
 class Solution:
     def mostProfitablePath(self, edges: List[List[int]], bob: int, amount: List[int]) -> int:
-        link = defaultdict(list)
-        answer = -float('inf')
+        n = len(amount)
+        graph = defaultdict(list)
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
         
-        for s, e in edges:
-            link[s].append(e)
-            link[e].append(s)
+        # 각 노드에 대해 Bob이 도착하는 시간을 저장 (경로에 없으면 inf)
+        bobTime = [inf] * n
         
-        bob_time = dict()
-        st = [(bob, 0, [bob])]
-        bob_time[bob] = 0
-        bob_path = None
-
-        while st:
-            node, time, path = st.pop()
-            if node == 0:
-                bob_path = path
-                break
-
-            for ne in link[node]:
-                if ne in bob_time:
+        # Bob이 0으로 가는 경로 상에 있는 노드에 대해 도착 시간을 계산하는 DFS
+        def dfsBob(u: int, parent: int, t: int) -> bool:
+            if u == 0:  # 0에 도착하면
+                bobTime[u] = t
+                return True
+            found = False
+            for v in graph[u]:
+                if v == parent:
                     continue
-                st.append((ne, time + 1, path + [ne]))
-                bob_time[ne] = time + 1
+                if dfsBob(v, u, t + 1):
+                    found = True
+            if found:
+                bobTime[u] = t
+            return found
         
-        st = [(0, 0, 0)] # node, time, cost
-        alice_visit = set()
-        alice_visit.add(0)
+        dfsBob(bob, -1, 0)
         
-        while st:
-            node, time, cost = st.pop()
-
-            if node in bob_path:
-                if time == bob_time[node]:
-                    cost += amount[node] // 2
-                elif time <= bob_time[node]:
-                    cost += amount[node]
-            else:
-                cost += amount[node]
+        ans = -inf
+        
+        # Alice가 0에서 출발해 리프로 가는 동안의 net profit 계산 DFS
+        def dfsAlice(u: int, parent: int, t: int, total: int) -> None:
+            nonlocal ans
+            # 도착 시간 t와 bobTime[u]를 비교하여 비용/보상 반영
+            if t < bobTime[u]:
+                total += amount[u]
+            elif t == bobTime[u]:
+                total += amount[u] // 2
+            # Bob이 먼저 도착했다면(total 변화 없음)
             
-            leaf = True
-            for ne in link[node]:
-                if ne in alice_visit:
+            # 리프 노드에 도착했다면 최대값 갱신
+            if u != 0 and len(graph[u]) == 1:
+                ans = max(ans, total)
+            
+            for v in graph[u]:
+                if v == parent:
                     continue
-                leaf = False
-                alice_visit.add(ne)
-                st.append((ne, time + 1, cost))
-
-            if leaf:
-                answer = max(cost, answer)
+                dfsAlice(v, u, t + 1, total)
         
-        return answer
+        dfsAlice(0, -1, 0, 0)
+        return ans
