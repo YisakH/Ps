@@ -6,7 +6,6 @@ class Solution:
         for i in range(1, len(acc_sum)):
             acc_sum[i] += acc_sum[i-1]
 
-        print(acc_sum)
         o_cnt, e_cnt = 0, 0
         answer = 0
 
