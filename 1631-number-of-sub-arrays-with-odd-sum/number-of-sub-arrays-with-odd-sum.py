@@ -1,7 +1,7 @@
 class Solution:
-    def numOfSubarrays(self, arr: List[int]) -> int:
+    def numOfSubarrays(self, acc_sum: List[int]) -> int:
         # 홀수와 인덱스를 센다
-        acc_sum = arr.copy()
+        #acc_sum = arr.copy()
 
         for i in range(1, len(acc_sum)):
             acc_sum[i] += acc_sum[i-1]
