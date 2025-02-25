@@ -1,22 +1,18 @@
 class Solution:
-    def numOfSubarrays(self, acc_sum: List[int]) -> int:
-        # 홀수와 인덱스를 센다
-        #acc_sum = arr.copy()
-
-        for i in range(1, len(acc_sum)):
-            acc_sum[i] += acc_sum[i-1]
-
-        o_cnt, e_cnt = 0, 0
+    def numOfSubarrays(self, arr: List[int]) -> int:
+        mod = 10**9 + 7
+        even, odd = 1, 0  # 초기 누적합 0은 짝수로 간주 -> even 초기값 1
+        prefix = 0
         answer = 0
 
-        for i, val in enumerate(acc_sum):
-            if val & 1:
-                answer = (answer + (1 + e_cnt)) % (10**9 + 7)
-                o_cnt += 1
+        for num in arr:
+            prefix += num
+            if prefix & 1:
+                # 현재 누적합이 홀수라면, 이전 짝수 누적합과의 차로 홀수 합을 만들 수 있음
+                answer = (answer + even) % mod
+                odd += 1
             else:
-                answer = (answer + o_cnt) % (10**9 + 7)
-                e_cnt += 1
+                answer = (answer + odd) % mod
+                even += 1
 
         return answer
-
-        
