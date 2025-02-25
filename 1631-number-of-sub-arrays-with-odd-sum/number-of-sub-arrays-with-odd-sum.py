@@ -10,7 +10,7 @@ class Solution:
         answer = 0
 
         for i, val in enumerate(acc_sum):
-            if val % 2:
+            if val & 1:
                 answer = (answer + (1 + e_cnt)) % (10**9 + 7)
                 o_cnt += 1
             else:
