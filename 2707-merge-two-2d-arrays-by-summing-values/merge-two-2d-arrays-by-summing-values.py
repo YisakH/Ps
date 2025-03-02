@@ -17,12 +17,10 @@ class Solution:
                 id1 += 1
                 id2 += 1
         
-        while id1 < len(nums1):
-            answer.append(nums1[id1])
-            id1 += 1
+        if id1 < len(nums1):
+            answer.extend(nums1[id1:])
         
-        while id2 < len(nums2):
-            answer.append(nums2[id2])
-            id2 += 1
+        if id2 < len(nums2):
+            answer.extend(nums2[id2:])
 
         return answer
