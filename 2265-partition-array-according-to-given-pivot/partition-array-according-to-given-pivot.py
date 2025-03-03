@@ -4,13 +4,14 @@ class Solution:
 
         for i, num in enumerate(nums):
             if num < pivot:
-                less.append(num)
+                nums[i] = (0, num)
             elif num > pivot:
-                greater.append(num)
+                nums[i] = (2, num)
             else:
-                pivot_l.append(num)
+                nums[i] = (1, num)
 
-        return less + pivot_l + greater
+        nums.sort(key=lambda x:x[0])
+        return [val for k, val in nums]
 
 
 
