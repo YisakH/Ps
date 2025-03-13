@@ -4,7 +4,10 @@ class Solution:
         k, i = 0, 0
 
         while i < len(nums):
-            while nums[i] + summ[i] > 0 and k < len(queries):
+            while nums[i] + summ[i] > 0:
+                if k == len(queries):
+                    return -1
+
                 l, r, val = queries[k]
                 l = max(l, i)
 
@@ -20,12 +23,5 @@ class Solution:
                 summ[i + 1] += summ[i]
             
             i += 1
-
-        if k < len(queries):
-            return k
-
-        for i in range(len(nums)):
-            if nums[i] + summ[i] > 0:
-                return -1
             
         return k
