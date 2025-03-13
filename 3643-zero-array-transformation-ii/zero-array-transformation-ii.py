@@ -1,44 +1,31 @@
 class Solution:
     def minZeroArray(self, nums: List[int], queries: List[List[int]]) -> int:
+        summ = [0 for _ in nums]
+        k, i = 0, 0
 
-        def getAnswer(k):
-            summ = [0 for _ in nums]
+        while i < len(nums):
+            while nums[i] + summ[i] > 0 and k < len(queries):
+                l, r, val = queries[k]
+                l = max(l, i)
 
-            for l, r, val in queries[:k+1]:
-                summ[l] -= val
-                if r < len(nums) - 1:
-                    summ[r + 1] += val
-            
-            for i in range(1, len(nums)):
-                summ[i] += summ[i-1]
-            
-            for i in range(len(nums)):
-                if nums[i] + summ[i] > 0:
-                    return False
-            
-            return True
+                if l <= r:
+                    summ[l] -= val
 
-        if sum(nums) == 0:
-            return 0
-
-        if not getAnswer(len(queries) - 1):
-            return -1
+                    if r < len(nums) - 1:
+                        summ[r + 1] += val
+                
+                k += 1
         
-        if getAnswer(0):
-            return 1
-        
-
-        
-        l, r = 0, len(queries) - 1
-        lastVal = False
-        while l <= r:
-            m = (l + r) // 2
-
-            if getAnswer(m):
-                r = m - 1
-                lastVal = True
-            else:
-                l = m + 1
-                lastVal = False
+            if i < len(nums) - 1:
+                summ[i + 1] += summ[i]
             
-        return l + 1 if lastVal else l + 1
+            i += 1
+
+        if k < len(queries):
+            return k
+
+        for i in range(len(nums)):
+            if nums[i] + summ[i] > 0:
+                return -1
+            
+        return k
