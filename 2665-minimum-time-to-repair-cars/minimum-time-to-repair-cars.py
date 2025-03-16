@@ -1,24 +1,30 @@
-from math import sqrt
-
 class Solution:
-    def repairCars(self, ranks: List[int], cars: int) -> int:
-        def getCars(time):
-            total = 0
-            
-            for rank in ranks:
-                total += int(sqrt(time/rank))
+    def repairCars(self, rank: List[int], cars: int) -> int:
+        # Count the frequency of each rank using a Counter
+        count = Counter(rank)
 
-            return total
-        
-        l, r = 1, 10 ** 14
+        # Create a Min-heap storing [time, rank, n, count]:
+        # - time: time for the next repair
+        # - rank: mechanic's rank
+        # - n: cars repaired by this mechanic
+        # - count: number of mechanics with this rank
+        # Initial time = rank (as rank * 1^2 = rank)
+        min_heap = [[rank, rank, 1, count[rank]] for rank in count]
+        heapify(min_heap)
 
-        while l <= r:
-            time = (l + r) // 2
+        # Process until all cars are repaired
+        while cars > 0:
+            # Pop the mechanic with the smallest current repair time
+            time, rank, n, count = heappop(min_heap)
 
-            curCars = getCars(time)
-            if curCars >= cars:
-                r = time - 1
-            else:
-                l = time + 1
+            # Deduct the number of cars repaired by this mechanic group
+            cars -= count
 
-        return l
+            # Increment the number of cars repaired by this mechanic
+            n += 1
+
+            # Push the updated repair time back into the heap
+            # The new repair time is rank * n^2 (since time increases quadratically with n)
+            heappush(min_heap, [rank * n * n, rank, n, count])
+
+        return time
