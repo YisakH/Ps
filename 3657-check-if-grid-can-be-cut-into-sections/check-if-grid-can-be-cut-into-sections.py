@@ -1,7 +1,11 @@
 class Solution:
     def checkValidCuts(self, n: int, rectangles: List[List[int]]) -> bool:
-        x_list = [(sx, ex) for sx, _, ex, _ in rectangles]
-        y_list = [(sy, ey) for _, sy, _, ey in rectangles]
+        x_list = []
+        y_list = []
+
+        for sx, sy, ex, ey in rectangles:
+            x_list.append((sx, ex))
+            y_list.append((sy, ey))
 
         x_list.sort(key=lambda x:(x[0], x[1]))
         y_list.sort(key=lambda y:(y[0], y[1]))
