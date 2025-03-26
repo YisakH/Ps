@@ -1,6 +1,8 @@
 class Solution:
     def minOperations(self, grid: List[List[int]], x: int) -> int:
-        arr = sum(grid, [])
+        arr = []
+        for sub in grid:
+            arr.extend(sub)
         arr.sort()
         n = len(arr)
 
