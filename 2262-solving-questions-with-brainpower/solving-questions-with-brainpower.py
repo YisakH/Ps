@@ -15,4 +15,4 @@ class Solution:
             dp[i+1] = max(dp[i], dp[i+1])
 
         #print(dp)
-        return max(dp)
+        return dp[N]
