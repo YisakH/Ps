@@ -8,49 +8,19 @@ from collections import Counter, defaultdict
 #         self.right = right
 class Solution:
     def lcaDeepestLeaves(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        depth_info = defaultdict(int)
-        parent = defaultdict(int)
-
-        def dfs(node, depth):
-            depth_info[node.val] = depth
-
-            if node.left:
-                parent[node.left.val] = node.val
-                dfs(node.left, depth + 1)
-            if node.right:
-                parent[node.right.val] = node.val
-                dfs(node.right, depth + 1)
-
-        def find(node, val):
-            if node.val == val:
-                return node
+        def dfs(node):
+            if not node:
+                return 0, None
             
-            if node.left:
-                res = find(node.left, val)
-                if res:
-                    return res
-            if node.right:
-                res = find(node.right, val)
-                if res:
-                    return res
+            left = dfs(node.left)
+            right = dfs(node.right)
+
+            if left[0] > right[0]:
+                return left[0] + 1, left[1]
+            elif left[0] < right[0]:
+                return right[0] + 1, right[1]
+            
+            return (left[0] + 1, node)
+
+        return dfs(root)[1]
         
-        dfs(root, 0)
-        max_depth = max(depth_info.values())
-        target = []
-
-        for key, val in depth_info.items():
-            if val == max_depth:
-                target.append(key)
-        s = set(target)
-        
-
-        while True:
-            ns = set()
-
-            if len(s) == 1:
-                return find(root, list(s)[0])
-
-            for num in s:
-                ns.add(parent[num])
-
-            s = ns
