@@ -7,7 +7,7 @@ class Solution:
             return False
         
         res //= 2
-        dp = defaultdict(bool)
+        dp = [False for _ in range(res + 1)]
         dp[0] = True
 
         for num in nums:
