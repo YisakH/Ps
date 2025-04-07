@@ -7,13 +7,11 @@ class Solution:
             return False
         
         res //= 2
-        dp = defaultdict(int)
+        dp = defaultdict(bool)
+        dp[0] = True
+
         for num in nums:
-            new_keys = [num]
-            for key in dp.keys():
-                new_keys.append(key + num)
-            
-            for new_key in new_keys:
-                dp[new_key] += 1
-        
+            for j in range(res, num - 1, -1):
+                dp[j] = dp[j] or dp[j-num]
+    
         return True if dp[res] else False
