@@ -3,15 +3,14 @@ class Solution:
         cnt = 0
 
         for num in range(low, high + 1):
-            st_num = str(num)
-
-            if len(st_num) % 2:
-                continue
-            
-            left = st_num[:len(st_num) // 2]
-            right = st_num[len(st_num)//2:]
-
-            if sum(map(int, left)) == sum(map(int, right)):
+            if num < 100 and num % 11 == 0:
                 cnt += 1
+            
+            if 1000 <= num < 10000:
+                left = num // 1000 + (num % 1000) // 100
+                right = (num % 100) // 10 + num % 10
+
+                if left == right:
+                    cnt += 1
         
         return cnt
