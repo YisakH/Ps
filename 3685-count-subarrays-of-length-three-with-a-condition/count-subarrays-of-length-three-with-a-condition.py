@@ -4,7 +4,7 @@ class Solution:
         for i in range(len(nums) -2):
             f, s, t = nums[i], nums[i+1], nums[i+2]
 
-            if f + t == s / 2:
+            if (f + t) * 2 == s:
                 cnt += 1
         
         return cnt
