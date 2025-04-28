@@ -11,11 +11,12 @@ class Solution(object):
 
             while l <= r:
                 m = (l + r) // 2
-                n = e - m
+                n = (nums[e] - nums[m]) * (e - m)
+                
 
-                if (nums[e] - nums[m]) * n < k:
+                if n < k:
                     r = m - 1
-                elif (nums[e] - nums[m]) * n >= k:
+                elif n >= k:
                     l = m + 1
 
             return l
