@@ -24,7 +24,7 @@ class Solution:
                 nt = max(t, moveTime[ny][nx])
                 nt += 1 if oneSec else 2
 
-                if nt + 1 < dist[ny][nx]:
+                if nt < dist[ny][nx]:
                     dist[ny][nx] = nt
                     heappush(heap, (nt, ny, nx, not oneSec))
 
