@@ -7,15 +7,10 @@ class Solution:
         
         heap = []
         heappush(heap, (0, 0, 0, True)) # ?, ?, ?, is One Sec
-        visit = set()
+        dist = [[float('inf') for _ in moveTime[0]] for _ in moveTime]
 
         while heap:
             t, cy, cx, oneSec = heappop(heap)
-            
-            if (cy, cx) in visit:
-                continue
-
-            visit.add((cy, cx))
             
             if (cy, cx) == (N-1, M-1):
                 return t
@@ -25,12 +20,12 @@ class Solution:
 
                 if not (0 <= ny < N and 0 <= nx < M):
                     continue
-                if (ny, nx) in visit:
-                    continue
 
                 nt = max(t, moveTime[ny][nx])
                 nt += 1 if oneSec else 2
-            
-                heappush(heap, (nt, ny, nx, not oneSec))
+
+                if nt + 1 < dist[ny][nx]:
+                    dist[ny][nx] = nt
+                    heappush(heap, (nt, ny, nx, not oneSec))
 
         return -1
