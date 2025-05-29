@@ -2,8 +2,8 @@ from collections import defaultdict
 
 class Solution:
     def maxTargetNodes(self, edges1: List[List[int]], edges2: List[List[int]]) -> List[int]:
-        tree1 = defaultdict(list)
-        tree2 = defaultdict(list)
+        tree1 = [[] for _ in range(len(edges1) + 1)]
+        tree2 = [[] for _ in range(len(edges2) + 1)]
 
         for u, v in edges1:
             tree1[u].append(v)
