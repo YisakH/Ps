@@ -10,11 +10,11 @@ class Solution:
         end_day = max([e for _, e in events])
         
         for day in range(events[0][0], end_day + 1):
-            while idx < len(events) and events[idx][0] <= day <= events[idx][1]:
-                heappush(heap, [events[idx][1], events[idx][0]])
+            while idx < len(events) and events[idx][0] <= day:
+                heappush(heap, events[idx][1])
                 idx += 1
             
-            while heap and not (heap[0][1] <= day <= heap[0][0]):
+            while heap and day > heap[0]:
                 heappop(heap)
             
             if heap:
