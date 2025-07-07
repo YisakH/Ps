@@ -2,7 +2,7 @@ from heapq import heappush, heappop
 
 class Solution:
     def maxEvents(self, events: List[List[int]]) -> int:
-        events.sort(key=lambda x:(x[0], x[1]))
+        events.sort()
         ans = 0
         heap = []
         idx = 0
