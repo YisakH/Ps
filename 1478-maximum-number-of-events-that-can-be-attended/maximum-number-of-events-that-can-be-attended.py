@@ -7,7 +7,7 @@ class Solution:
         heap = []
         idx = 0
 
-        end_day = max([e for _, e in events])
+        end_day = max([e[1] for e in events])
         
         for day in range(events[0][0], end_day + 1):
             while idx < len(events) and events[idx][0] <= day:
