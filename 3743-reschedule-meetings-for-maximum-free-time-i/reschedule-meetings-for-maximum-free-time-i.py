@@ -6,8 +6,7 @@ class Solution:
         ans = 0
         cur_sum = 0
 
-        startTime.sort()
-        endTime.sort()
+
         q = deque([[0,0]])
 
         for s, e in zip(startTime, endTime):
