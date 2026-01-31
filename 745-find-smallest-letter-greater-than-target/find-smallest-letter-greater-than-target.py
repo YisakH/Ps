@@ -1,7 +1,7 @@
 class Solution(object):
     def nextGreatestLetter(self, letters, target):
-        for i, l in enumerate(letters):
-            if target < l:
-                return l
+        for i, k in enumerate(letters):
+            if target < k:
+                return k
         
         return letters[0]
