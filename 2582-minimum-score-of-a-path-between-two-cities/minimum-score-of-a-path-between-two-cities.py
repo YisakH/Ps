@@ -16,19 +16,19 @@ class Solution(object):
 
         q = deque()
         q.append(1)
-        visit = set()
+        visit = set([1])
         answer = float('inf')
 
         while q:
             cur = q.popleft()
             for dest, dist in edges[cur]:
-                a, b = min(cur, dest), max(cur, dest)
-                if (a, b) in visit:
+                answer = min(answer, dist)
+
+                if dest in visit:
                     continue
                 
-                visit.add((a, b))
+                visit.add(dest)
                 q.append(dest)
-                answer = min(answer, dist)
             
         return answer
 
